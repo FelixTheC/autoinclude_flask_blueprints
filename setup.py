@@ -4,18 +4,20 @@
 @created: 18.05.20
 @author: felix
 """
+import pathlib
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+HERE = pathlib.Path(__file__).parent
+
+README = (HERE / "README.md").read_text()
 
 setuptools.setup(
     name="autoinclude_blueprints",
-    version="0.0.1",
+    version="0.3",
     author="Felix Eisenmenger",
     author_email="f.eisenmenger@gmx.net",
     description="A package for flask to auto include Blueprints",
-    long_description=long_description,
+    long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/FelixTheC/autoinclude_flask_blueprints.git",
     classifiers=[

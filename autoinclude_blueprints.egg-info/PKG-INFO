@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: autoinclude-blueprints
-Version: 0.0.1
+Version: 0.3
 Summary: A package for flask to auto include Blueprints
 Home-page: https://github.com/FelixTheC/autoinclude_flask_blueprints.git
 Author: Felix Eisenmenger
