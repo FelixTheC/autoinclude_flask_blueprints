@@ -18,7 +18,6 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/FelixTheC/autoinclude_flask_blueprints.git",
-    packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
@@ -26,6 +25,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Framework :: Flask",
     ],
-    scripts=['incl_blueprints/auto_include_blueprints.py'],
+    packages=['incl_blueprints'],
     include_package_data=True,
 )

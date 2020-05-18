@@ -4,4 +4,4 @@
 @created: 18.05.20
 @author: felix
 """
-
+__version__ = "0.1"
