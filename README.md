@@ -7,6 +7,9 @@ Example:
 <p>src/app/__init__.py</p>
 
 ```
+...
+from incl_blueprints.auto_include_blueprints import add_blueprints_from_dir
+
 def register_blueprints(used_flask_app: any):
     current = pathlib.Path.cwd()
     add_blueprints_from_dir(directory=pathlib.Path.joinpath(current, 'src', 'app', 'views'),
@@ -33,7 +36,7 @@ if __name__ == '__main__':
 
 ### Installing
 - python setup.py install
-- https://github.com/FelixTheC/autoinclude_flask_blueprints.git
+- pip install git+https://github.com/FelixTheC/autoinclude_flask_blueprints.git
 
 ### Running the tests
 - python test_typing.py

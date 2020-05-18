@@ -13,7 +13,7 @@ README = (HERE / "README.md").read_text()
 
 setuptools.setup(
     name="autoinclude_blueprints",
-    version="0.3",
+    version="0.4",
     author="Felix Eisenmenger",
     author_email="f.eisenmenger@gmx.net",
     description="A package for flask to auto include Blueprints",
@@ -27,6 +27,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Framework :: Flask",
     ],
-    packages=['incl_blueprints'],
+    scripts=['incl_blueprints/auto_include_blueprints.py'],
     include_package_data=True,
 )
