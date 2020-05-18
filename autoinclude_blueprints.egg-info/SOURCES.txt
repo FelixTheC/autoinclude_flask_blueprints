@@ -1,0 +1,8 @@
+README.md
+setup.py
+autoinclude_blueprints.egg-info/PKG-INFO
+autoinclude_blueprints.egg-info/SOURCES.txt
+autoinclude_blueprints.egg-info/dependency_links.txt
+autoinclude_blueprints.egg-info/top_level.txt
+incl_blueprints/__init__.py
+incl_blueprints/auto_include_blueprints.py

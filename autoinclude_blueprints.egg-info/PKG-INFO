@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: autoinclude-blueprints
+Version: 0.0.1
+Summary: A package for flask to auto include Blueprints
+Home-page: https://github.com/FelixTheC/autoinclude_flask_blueprints.git
+Author: Felix Eisenmenger
+Author-email: f.eisenmenger@gmx.net
+License: UNKNOWN
+Description: # Auto include blueprints from a directory
+        
+        
+        ## Getting Started
+        Example:
+         
+        <p>src/app/__init__.py</p>
+        
+        ```
+        def register_blueprints(used_flask_app: any):
+            current = pathlib.Path.cwd()
+            add_blueprints_from_dir(directory=pathlib.Path.joinpath(current, 'src', 'app', 'views'),
+                                    flask_app=used_flask_app)
+        ```
+        And in your src/run.py
+        ```
+        ...
+        from app import flask_app
+        from app import register_blueprints
+        ...
+        
+        register_blueprints(flask_app)
+        
+        ...
+        
+        if __name__ == '__main__':
+            flask_app.run()
+        ```
+        
+        
+        ### Prerequisites
+        - flask
+        
+        ### Installing
+        - python setup.py install
+        - https://github.com/FelixTheC/autoinclude_flask_blueprints.git
+        
+        ### Running the tests
+        - python test_typing.py
+        
+        #### Versioning
+        - For the versions available, see the tags on this repository.
+        
+        ### Authors
+        - Felix Eisenmenger - Initial work
+        
+        ### License
+        - This project is licensed under the MIT License - see the LICENSE.md file for details
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Framework :: Flask
+Description-Content-Type: text/markdown

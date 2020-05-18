@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="autoinclude_flask_blueprints-FelixTheC",
+    name="autoinclude_blueprints",
     version="0.0.1",
     author="Felix Eisenmenger",
     author_email="f.eisenmenger@gmx.net",
