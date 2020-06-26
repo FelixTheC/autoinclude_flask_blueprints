@@ -14,7 +14,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 setup(
     name="flask_bp_autoregister",
-    version="0.0.1",
+    version="0.0.2",
     description="Auto register all project flask-blueprints.",
     long_description=README,
     long_description_content_type="text/markdown",
