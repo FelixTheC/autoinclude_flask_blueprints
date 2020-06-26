@@ -9,8 +9,6 @@ import sys
 
 import flask
 import pytest
-
-from flask_bp_autoregister.blueprints import BlueprintPathError
 from flask_bp_autoregister.blueprints import register_blueprints
 
 
@@ -97,6 +95,18 @@ app_bp.add_url_rule('/about', view_func=AboutView.as_view(name='about'))
     """
 
 
+def account_view_comment_blueprint() -> str:
+    return """
+import flask
+
+# app_bp = flask.Blueprint('account', __name__, url_prefix='/account')
+
+@app_bp.route('/')
+def index():
+    return 'Success'
+    
+"""
+
 def add_tmp_path_to_sys(path: pathlib.Path):
     if path not in sys.path:
         sys.path[0] = str(path)
@@ -148,7 +158,7 @@ def create_broken_project_struct(tmp_path):
     d = d / 'some_view'
     d.mkdir()
     d = d / 'some_api.py'
-    d.write_text(account_view_blueprint())
+    d.write_text(account_view_comment_blueprint())
     return d
 
 
@@ -178,6 +188,18 @@ def test_find_only_account_blueprints(create_tmp_project_struct):
     assert len(flask_app.blueprints) == 1
     assert 'home' not in flask_app.blueprints
     assert 'account' in flask_app.blueprints
+
+
+def test_ignore_commented_blueprints(create_broken_project_struct):
+    flask_app = flask.Flask(__name__)
+    with pytest.raises(AttributeError):
+        register_blueprints(flask_app, str(tuple(create_broken_project_struct.parents)[2]))
+
+
+def test_ignore_silent_commented_blueprints(create_broken_project_struct):
+    flask_app = flask.Flask(__name__)
+    register_blueprints(flask_app, str(tuple(create_broken_project_struct.parents)[2]), silent=True)
+    assert len(flask_app.blueprints) == 0
 
 
 if __name__ == '__main__':
