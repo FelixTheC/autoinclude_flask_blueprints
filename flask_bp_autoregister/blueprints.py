@@ -34,11 +34,11 @@ def get_module_blueprint(bp_module: tuple) -> Union[flask.Blueprint, None]:
     :return: flask.blueprints.Blueprint object
     """
     path_length = len(bp_module[1])
-    if path_length >= 1:
+    if path_length >= 1 and bp_module[0][0] != '#':  # ignore blueprints when they are comment out
         try:
             # imports module dynamically
             module = __import__(bp_module[1], fromlist=[bp_module[0], ])
-        except ModuleNotFoundError as e:
+        except ModuleNotFoundError:
             return get_module_blueprint((bp_module[0], '.'.join(bp_module[1].split('.')[1:])))
         else:
             # returns the created Blueprint instance from the dynamically imported module
@@ -48,7 +48,18 @@ def get_module_blueprint(bp_module: tuple) -> Union[flask.Blueprint, None]:
                 return get_module_blueprint((bp_module[0], '.'.join(bp_module[1].split('.')[1:])))
 
 
-def add_blueprints_from_dir(*, directory: pathlib.Path = None, flask_app: any = None):
+def register_blueprint_4_flask_app(flask_app: any, blueprint: flask.Blueprint, silent: bool, *args):
+    try:
+        flask_app.register_blueprint(blueprint)
+    except AttributeError as e:
+        error_info = (*e.args, *args)
+        if silent:
+            print(error_info)
+        else:
+            raise AttributeError(error_info)
+
+
+def add_blueprints_from_dir(*, directory: pathlib.Path = None, flask_app: any = None, silent: bool = False):
     files_and_bps = []
     for file in directory.glob('**/*.py'):
         if file.name != __file__:
@@ -57,10 +68,18 @@ def add_blueprints_from_dir(*, directory: pathlib.Path = None, flask_app: any = 
                                    path_url_2_model_path(file.as_posix())
                                    ) for line in file_lines if is_blueprint_line(line)
                                   ])
-    [flask_app.register_blueprint(get_module_blueprint(f_bp)) for f_bp in files_and_bps if f_bp is not None]
+
+    [register_blueprint_4_flask_app(flask_app, get_module_blueprint(f_bp), silent, f_bp) for f_bp in files_and_bps]
 
 
-def register_blueprints(used_flask_app: any, base_path: str = None):
+def register_blueprints(used_flask_app: any, base_path: str = None, silent: bool = False):
+    """
+    :param used_flask_app: the flask app => flask_app = Flask(__name__)
+    :param base_path: the path from the base dir like my_app/src/api
+    :param silent: False if errors during the registration should be raised True if they only should be printed
+    :return:
+    """
     bp_dir = pathlib.Path(base_path) if base_path is not None else pathlib.Path(__file__).resolve().parent
     add_blueprints_from_dir(directory=bp_dir,
-                            flask_app=used_flask_app)
+                            flask_app=used_flask_app,
+                            silent=silent)
