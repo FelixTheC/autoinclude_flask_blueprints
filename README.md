@@ -37,7 +37,37 @@ from my_app import flask_app
 from flask_bp_autoregister.blueprints import register_blueprints
 
 
-register_blueprints(flask_app, 'my_project/src/my_app') # the root directory under which all blueprints are created
+register_blueprints(flask_app, 'my_project/src/my_app')
+
+
+if __name__ == '__main__':
+    flask_app.run()
+
+```
+
+The path attribute is not really needed you can also use it without then all blueprints inside of the project will be registered automatically
+```python
+
+from my_app import flask_app
+from flask_bp_autoregister.blueprints import register_blueprints
+
+
+register_blueprints(flask_app)
+
+
+if __name__ == '__main__':
+    flask_app.run()
+
+```
+
+When you have some __commented Blueprints__ inside of your project, __register_blueprints__ will try to register them too <br>
+which will raise an AttributeError you can disable this with __silent=True__
+```python
+from my_app import flask_app
+from flask_bp_autoregister.blueprints import register_blueprints
+
+
+register_blueprints(flask_app, silent=True) # will prevent raising AttributeError
 
 
 if __name__ == '__main__':
@@ -50,7 +80,7 @@ if __name__ == '__main__':
 
 ### Installing
 
-- pip install git+https://github.com/FelixTheC/flask_bp_autoregister.git
+- pip install git+https://github.com/FelixTheC/autoinclude_flask_blueprints.git
 
 #### Versioning
 - For the versions available, see the tags on this repository.
