@@ -107,6 +107,7 @@ def index():
     
 """
 
+
 def add_tmp_path_to_sys(path: pathlib.Path):
     if path not in sys.path:
         sys.path[0] = str(path)
@@ -204,6 +205,15 @@ def test_ignore_silent_commented_blueprints(create_broken_project_struct):
     flask_app = flask.Flask(__name__)
     register_blueprints(flask_app, str(tuple(create_broken_project_struct.parents)[2]), silent=True)
     assert len(flask_app.blueprints) == 0
+
+
+def test_base_path_empty(create_tmp_project_struct, tmp_path):
+    d = tmp_path / 'my_app' / 'src' / 'app'
+    flask_app = flask.Flask(__name__)
+    flask_app.root_path = str(d)
+
+    register_blueprints(flask_app)
+    assert len(flask_app.blueprints) == 2
 
 
 if __name__ == '__main__':

@@ -79,7 +79,7 @@ def register_blueprints(used_flask_app: any, base_path: str = None, silent: bool
     :param silent: False if errors during the registration should be raised True if they only should be printed
     :return:
     """
-    bp_dir = pathlib.Path(base_path) if base_path is not None else pathlib.Path(__file__).resolve().parent
+    bp_dir = pathlib.Path(base_path) if base_path is not None else pathlib.Path(used_flask_app.root_path)
     add_blueprints_from_dir(directory=bp_dir,
                             flask_app=used_flask_app,
                             silent=silent)
