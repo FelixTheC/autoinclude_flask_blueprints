@@ -14,7 +14,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 setup(
     name="autoinclude_blueprints",
-    version="0.5",
+    version="1.0.0",
     description="Auto register all project flask-blueprints.",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -30,6 +30,7 @@ setup(
     python_requires='>=3.6',
     include_package_data=True,
     install_requires=[
-        "flask>=1.1.0"
+        "flask>=1.1.0",
+        "strongtyping>=1.3.0"
     ]
 )

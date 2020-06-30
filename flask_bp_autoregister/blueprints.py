@@ -7,6 +7,7 @@
 import os
 import pathlib
 from typing import Union
+from strongtyping.strong_typing import match_typing
 
 import flask
 
@@ -48,18 +49,19 @@ def get_module_blueprint(bp_module: tuple) -> Union[flask.Blueprint, None]:
                 return get_module_blueprint((bp_module[0], '.'.join(bp_module[1].split('.')[1:])))
 
 
-def register_blueprint_4_flask_app(flask_app: any, blueprint: flask.Blueprint, silent: bool, *args):
+def register_blueprint_4_flask_app(flask_app: flask.app.Flask, blueprint: flask.Blueprint, silent: bool, *args):
     try:
         flask_app.register_blueprint(blueprint)
     except AttributeError as e:
-        error_info = (*e.args, *args)
+        error_info = ('Found disabled/broken Blueprint', *args)
         if silent:
             print(error_info)
         else:
             raise AttributeError(error_info)
 
 
-def add_blueprints_from_dir(*, directory: pathlib.Path = None, flask_app: any = None, silent: bool = False):
+@match_typing
+def add_blueprints_from_dir(*, directory: pathlib.Path = None, flask_app: flask.app.Flask = None, silent: bool = False):
     files_and_bps = []
     for file in directory.glob('**/*.py'):
         if file.name != __file__:
@@ -72,14 +74,14 @@ def add_blueprints_from_dir(*, directory: pathlib.Path = None, flask_app: any = 
     [register_blueprint_4_flask_app(flask_app, get_module_blueprint(f_bp), silent, f_bp) for f_bp in files_and_bps]
 
 
-def register_blueprints(used_flask_app: any, base_path: str = None, silent: bool = False):
+@match_typing
+def register_blueprints(used_flask_app: flask.app.Flask, base_path: str = None, silent: bool = False) -> None:
     """
-    :param used_flask_app: the flask app => flask_app = Flask(__name__)
-    :param base_path: the path from the base dir like my_app/src/api
+    :param used_flask_app: the flask app "flask_app = Flask(__name__)"
+    :param base_path: the path from the base dir like "my_app/src/api"
     :param silent: False if errors during the registration should be raised True if they only should be printed
-    :return:
     """
-    bp_dir = pathlib.Path(base_path) if base_path is not None else pathlib.Path(__file__).resolve().parent
+    bp_dir = pathlib.Path(base_path) if base_path is not None else pathlib.Path(used_flask_app.root_path)
     add_blueprints_from_dir(directory=bp_dir,
                             flask_app=used_flask_app,
                             silent=silent)
