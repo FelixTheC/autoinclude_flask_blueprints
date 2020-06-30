@@ -142,6 +142,10 @@ def create_tmp_project_struct(tmp_path):
     d = d / 'api'
     d.mkdir()
     d = add_init_py(d)
+    d = d / 'api_api'
+    d.mkdir()
+    d = d / 'api_api_api'
+    d.mkdir()
     d = d / 'other_api.py'
     d.write_text(home_view_blueprint())
     return d
@@ -164,7 +168,7 @@ def create_broken_project_struct(tmp_path):
 
 def test_find_all_blueprints(create_tmp_project_struct):
     flask_app = flask.Flask(__name__)
-    register_blueprints(flask_app, str(tuple(create_tmp_project_struct.parents)[3]))
+    register_blueprints(flask_app, str(tuple(create_tmp_project_struct.parents)[5]))
     assert len(flask_app.blueprints) == 2
     assert 'home' in flask_app.blueprints
     assert 'account' in flask_app.blueprints
@@ -184,7 +188,7 @@ def test_find_only_account_blueprints(create_tmp_project_struct):
 
     flask_app = flask.Flask(__name__)
     # path => 'my_app/src/app/some_view'
-    register_blueprints(flask_app, str(tuple(create_tmp_project_struct.parents)[2] / 'some_view'))
+    register_blueprints(flask_app, str(tuple(create_tmp_project_struct.parents)[4] / 'some_view'))
     assert len(flask_app.blueprints) == 1
     assert 'home' not in flask_app.blueprints
     assert 'account' in flask_app.blueprints
@@ -193,7 +197,7 @@ def test_find_only_account_blueprints(create_tmp_project_struct):
 def test_ignore_commented_blueprints(create_broken_project_struct):
     flask_app = flask.Flask(__name__)
     with pytest.raises(AttributeError):
-        register_blueprints(flask_app, str(tuple(create_broken_project_struct.parents)[2]))
+        register_blueprints(flask_app, str(tuple(create_broken_project_struct.parents)[1]))
 
 
 def test_ignore_silent_commented_blueprints(create_broken_project_struct):
