@@ -1,5 +1,7 @@
 [![PyPI version](https://badge.fury.io/py/autoinclude-blueprints.svg)](https://badge.fury.io/py/autoinclude-blueprints)
 ![Python application](https://github.com/FelixTheC/autoinclude_flask_blueprints/workflows/Python%20application/badge.svg?branch=master)
+![image](https://codecov.io/gh/FelixTheC/autoinclude_flask_blueprints/graph/badge.svg)
+
 # Flask Blueprint autoinclude
 A function to automatically register all flask-blueprints from a project.
 <br>__register_blueprints__ from flask_bp_autoregister.blueprints
