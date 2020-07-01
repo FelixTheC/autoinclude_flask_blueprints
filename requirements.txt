@@ -1,2 +1,4 @@
 Flask>=1.1.0
 strongtyping>=1.3.0
+pytest
+pytest-cov
