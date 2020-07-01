@@ -1,3 +1,4 @@
+![Upload Python Package](https://github.com/FelixTheC/autoinclude_flask_blueprints/workflows/Upload%20Python%20Package/badge.svg?branch=master)
 # Flask Blueprint autoinclude
 A function to automatically register all flask-blueprints from a project.
 <br>__register_blueprints__ from flask_bp_autoregister.blueprints
